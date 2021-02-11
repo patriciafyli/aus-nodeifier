@@ -1,6 +1,5 @@
 const axios = require('axios'); // Promise-based HTTP client for Node.js and the browser
 const cheerio = require('cheerio'); // jQuery implementation for Node.js. Cheerio makes it easy to select, edit, and view DOM elements.
-// const Diff = require('text-diff'); // Where is this supposed to go?
 fs = require('fs'); // does it need to be const?
 const Diff = require('text-diff'); // Where is this supposed to go? Learn about variable scopes in Node
 
@@ -11,6 +10,12 @@ var prevContents = readFile(contentsFile)
 // using Twilio SendGrid's v3 Node.js Library
 // https://github.com/sendgrid/sendgrid-nodejs
 const sgMail = require('@sendgrid/mail')
+const recipientEmail = process.env.RECIPIENT_EMAIL
+const senderEmail = process.env.SENDER_EMAIL
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+templates = {
+  australia_visa_update: "d-4c151e3c5be443d9b42820e8ebaf455e"
+};
 // npm install --save @sendgrid/mail
 
 axios(url)
@@ -25,9 +30,9 @@ axios(url)
 
       writeFile(contentsFile, currentContents) // what does the callback do? understand this
 
-      let diffHtml = getDiffHtml(prevContents, currentContents) // TODO: Make this prettier
+      let diffHtml = getDiffHtml(prevContents, currentContents) // TODO: How to style this with CSS?
 
-      sendEmail('patricia.fy.li@gmail.com', 'li.patricia@protonmail.com', 'Australian Visa Page Updated', url, diffHtml)
+      sendEmail(recipientEmail, senderEmail, 'd-4c151e3c5be443d9b42820e8ebaf455e', url, diffHtml)
     }
     else {
       console.log('Page contents the same as last checked')
@@ -36,14 +41,15 @@ axios(url)
   })
   .catch(console.error);
 
-  function sendEmail(recipient, sender, subject, text, html) {
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+  function sendEmail(recipient, sender, templateId, url, html) {
     const msg = {
       to: recipient,
       from: sender,
-      subject: subject,
-      text: text, // format this?
-      html: html,
+      templateId: templateId,
+      dynamic_template_data: {
+        url: url,
+        html: html
+      }
     }
     sgMail
       .send(msg)
@@ -78,5 +84,3 @@ axios(url)
 
     return html
   }
-
-// TODO: Use twilio to email myself based on return code
