@@ -1,5 +1,8 @@
-# webscraper
+![My friend](https://www.austravel.com/sites/default/files/styles/homepage_image_slider/public/CNS.A.2012.003608.002.jpg?itok=9VcQhtHd)
 
-This is a simple NodeJS webscraper created using [this tutorial](https://pusher.com/tutorials/web-scraper-node).
+This simple webscraper checks the Australian visa application website for updates. It compares the latest text to the previous text (saved in a local file) and sends an email notification using a dynamic [SendGrid](https://app.sendgrid.com) template with a diff if there are differences.
 
-Turtle image from [here](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.austravel.com%2Fblog%2Fwhere-see-turtles-australia&psig=AOvVaw2C4_GV2HOLrLsrkqoBrRNO&ust=1613096391806000&source=images&cd=vfe&ved=0CA0QjhxqFwoTCMi_nuLl4O4CFQAAAAAdAAAAABAD).
+References:
+- [NodeJS webscraper tutorial](https://pusher.com/tutorials/web-scraper-node)
+- [NodeJS and SendGrid tutorial](https://medium.com/@arjunbastola/sending-emails-using-node-js-and-sendgrid-5ad4dea7cf44)
+- [Sea turtle friend](https://www.austravel.com/sites/default/files/styles/homepage_image_slider/public/CNS.A.2012.003608.002.jpg?itok=9VcQhtHd)
